@@ -25,7 +25,6 @@ describe('ConfigModule', () => {
 
   describe('should compile the module', () => {
     it('should have node_env', () => {
-      console.log(service.get('node_env'));
       expect(service.get('node_env')).toBeDefined();
     });
     it('should have mongodb_uri', () => {
