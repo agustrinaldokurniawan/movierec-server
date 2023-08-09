@@ -1,0 +1,32 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  test:
+    env:
+      MONGODB_URI: ${{secrets.MONGODB_URI}}
+      NODE_ENV: ${{secrets.NODE_ENV}}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Run CI command
+        run: npm ci
+      - name: Run Install Dependencies
+        run: npm install
+      - name: Run Test
+        run: npm test
